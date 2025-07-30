@@ -56,3 +56,6 @@ Notification messages
 
 Automatic boombox restore on reconnect
 
+# Media
+
+<img width="739" height="546" alt="image" src="https://github.com/user-attachments/assets/302314cd-0055-4756-9e8a-3db2e2f631d8" />
