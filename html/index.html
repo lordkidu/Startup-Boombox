@@ -1,45 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>Boombox - Spotify Style</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      rel="stylesheet"
-    />
+  <meta charset="UTF-8" />
+  <title>Boombox - Spotify Style</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 </head>
 <body>
-    <div id="boombox-ui" class="dark hidden">
-                    <div id="drag-bar" title="Drag to move"></div>  <!-- <-- Barre drag -->
-        <header>
-            <h1>Boombox</h1>
-            <div class="header-right">
-                <button id="themeToggle" title="Toggle Theme"><i class="fa-solid fa-circle-half-stroke"></i></button>
-                <button id="closeBtn" title="Close"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-        </header>
-        <div class="track-info">
-            <input type="text" id="url" placeholder="Enter YouTube, Spotify or MP3 URL..." autocomplete="off" />
-            <p id="trackStatus">No track playing</p>
-        </div>
-        <div class="controls">
-            <button id="playPauseBtn" title="Play"><i class="fa-solid fa-play"></i></button>
-            <button id="stopBtn" title="Stop"><i class="fa-solid fa-stop"></i></button>
-        </div>
-        <div class="volume-control">
-            <i class="fa-solid fa-volume-low"></i>
-            <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5" />
-            <i class="fa-solid fa-volume-high"></i>
-        </div>
+  <div id="boombox-ui" class="dark hidden">
+    <div id="drag-bar" title="Drag to move"></div>
+    
+    <!-- HEADER -->
+    <header>
+      <h1>Boombox</h1>
+      <div class="header-right">
+        <button id="expandBtn" title="Expand"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></button>
+        <button id="themeToggle" title="Toggle Theme"><i class="fa-solid fa-circle-half-stroke"></i></button>
+        <button id="closeBtn" title="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    </header>
 
-        <div class="distance-control">
-            <label for="distance">Distance</label>
-            <input type="range" id="distance" min="5" max="50" step="1" value="15" />
-            <span id="distanceValue">15m</span>
-        </div>
+    <!-- INPUT + ADD TRACK -->
+    <div class="track-info">
+      <input type="text" id="url" placeholder="Enter YouTube, Spotify or MP3 URL..." autocomplete="off" />
+      
+      <div class="add-menu-container" style="position: relative; display: inline-block;">
+        <button id="addToPlaylistBtn" class="add-playlist"><i class="fa-solid fa-plus"></i> Add to Playlist</button>
+        <ul id="playlistDropdown" class="hidden"></ul>
+      </div>
+
+      <p id="trackStatus">No track playing</p>
     </div>
 
-    <script src="script.js"></script>
+    <!-- CONTROLS -->
+    <div class="controls">
+      <button id="playPauseBtn" title="Play"><i class="fa-solid fa-play"></i></button>
+      <button id="stopBtn" title="Stop"><i class="fa-solid fa-stop"></i></button>
+    </div>
+
+    <!-- VOLUME -->
+    <div class="volume-control">
+      <i class="fa-solid fa-volume-low"></i>
+      <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5" />
+      <i class="fa-solid fa-volume-high"></i>
+    </div>
+
+    <!-- DISTANCE -->
+    <div class="distance-control">
+      <label for="distance">Distance</label>
+      <input type="range" id="distance" min="5" max="50" step="1" value="15" />
+      <span id="distanceValue">15m</span>
+    </div>
+
+    <!-- PLAYLIST SECTION -->
+    <div id="playlist-section" class="hidden">
+      <div class="playlist-sidebar">
+        <h2>Playlists</h2>
+        <ul id="playlistsMenu"></ul>
+        <div class="playlist-form" style="display: flex; gap: 8px; margin-top: 10px;">
+          <input type="text" id="playlistName" placeholder="New Playlist..." style="flex: 1;" />
+          <button id="createPlaylistBtn" style="width: 40px; display: flex; align-items: center; justify-content: center;">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="playlist-content" style="position: relative;">
+        <h3 id="currentPlaylistTitle" style="margin: 0; padding-right: 80px;">No Playlist Selected</h3>
+        
+        <!-- Bouton Delete -->
+        <button id="deletePlaylistBtn" title="Delete Current Playlist" 
+          style="position: absolute; top: 0; right: 0; padding: 6px 10px; font-size: 14px; background:#e74c3c; border:none; color:white; border-radius:4px; cursor:pointer;" 
+          disabled>
+          🗑️ 
+        </button>
+
+        <ul id="playlistTracks"></ul>
+      </div>
+    </div>
+
+    <!-- UI de confirmation moderne -->
+    <div id="deleteConfirmContainer" class="confirm-modal hidden">
+      <div class="confirm-box">
+        <p class="confirm-text">Are you sure you want to delete this playlist?</p>
+        <div class="confirm-buttons">
+          <button id="confirmDeleteBtn" class="btn confirm">Yes</button>
+          <button id="cancelDeleteBtn" class="btn cancel">No</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
