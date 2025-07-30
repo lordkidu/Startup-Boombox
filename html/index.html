@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Boombox - Spotify Style</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+</head>
+<body>
+    <div id="boombox-ui" class="dark hidden">
+                    <div id="drag-bar" title="Drag to move"></div>  <!-- <-- Barre drag -->
+        <header>
+            <h1>Boombox</h1>
+            <div class="header-right">
+                <button id="themeToggle" title="Toggle Theme"><i class="fa-solid fa-circle-half-stroke"></i></button>
+                <button id="closeBtn" title="Close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </header>
+        <div class="track-info">
+            <input type="text" id="url" placeholder="Enter YouTube, Spotify or MP3 URL..." autocomplete="off" />
+            <p id="trackStatus">No track playing</p>
+        </div>
+        <div class="controls">
+            <button id="playPauseBtn" title="Play"><i class="fa-solid fa-play"></i></button>
+            <button id="stopBtn" title="Stop"><i class="fa-solid fa-stop"></i></button>
+        </div>
+        <div class="volume-control">
+            <i class="fa-solid fa-volume-low"></i>
+            <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5" />
+            <i class="fa-solid fa-volume-high"></i>
+        </div>
+
+        <div class="distance-control">
+            <label for="distance">Distance</label>
+            <input type="range" id="distance" min="5" max="50" step="1" value="15" />
+            <span id="distanceValue">15m</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
