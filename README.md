@@ -1,8 +1,8 @@
-🎵 Startup Boombox
+# 🎵 Startup Boombox
 Bring life to your server with a fully interactive Boombox system!
 Players can play music anywhere, carry their boombox, or drop it on the ground for everyone nearby to hear.
 
-✨ Features
+# ✨ Features
 🔊 Play 3D positional audio with adjustable distance and volume (via xsound)
 
 🎶 Drop the boombox on the ground and let everyone nearby hear the music
@@ -27,14 +27,14 @@ Adjust sound distance
 
 🌐 3D sound only plays for players within a configurable distance
 
-📦 Dependencies
+# 📦 Dependencies
 ESX Framework
 
 ox_target
 
 xsound
 
-🕹️ Usage
+# 🕹️ Usage
 Use the boombox item to spawn and hold the boombox.
 
 Press E to drop it on the ground.
@@ -47,7 +47,7 @@ Pick it up into your inventory
 
 Hold it in your hands again
 
-⚙️ Configuration
+# ⚙️ Configuration
 Sound max distance and volume
 
 Target interaction distance
