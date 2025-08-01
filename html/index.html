@@ -34,8 +34,9 @@
 
     <!-- CONTROLS -->
     <div class="controls">
+      <button id="prevTrackBtn" title="Previous"><i class="fa-solid fa-backward"></i></button>
       <button id="playPauseBtn" title="Play"><i class="fa-solid fa-play"></i></button>
-      <button id="stopBtn" title="Stop"><i class="fa-solid fa-stop"></i></button>
+      <button id="nextTrackBtn" title="Next"><i class="fa-solid fa-forward"></i></button>
     </div>
 
     <!-- VOLUME -->
@@ -72,7 +73,7 @@
         <button id="deletePlaylistBtn" title="Delete Current Playlist" 
           style="position: absolute; top: 0; right: 0; padding: 6px 10px; font-size: 14px; background:#e74c3c; border:none; color:white; border-radius:4px; cursor:pointer;" 
           disabled>
-          🗑️ 
+          🗑️
         </button>
 
         <ul id="playlistTracks"></ul>
@@ -89,7 +90,6 @@
         </div>
       </div>
     </div>
-
   </div>
 
   <script src="script.js"></script>

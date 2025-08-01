@@ -1,7 +1,7 @@
 fx_version 'cerulean'
 game  'gta5'
 author 'ludwikgame'
-version '1.1'
+version '1.2'
 lua54 'yes'
 
 ui_page 'html/index.html'

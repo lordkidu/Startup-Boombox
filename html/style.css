@@ -1,3 +1,4 @@
+/* --------------------- GLOBAL --------------------- */
 body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -12,31 +13,34 @@ body {
     display: none !important;
 }
 
+/* --------------------- BOOMBOX UI --------------------- */
 #boombox-ui {
     width: 380px;
     border-radius: 20px;
     padding: 25px 30px;
-    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 18px;
 
-    animation: fadeIn 0.3s ease;
-    transition: background 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+    background: rgba(20, 30, 60, 0.9);
+    box-shadow: 0 8px 32px rgba(0, 0, 80, 0.4);
+  transition: all 0.5s ease;
+  transform-origin: center center;
+  transform: scale(1);
+  overflow: hidden;
 }
 
-/* THEMES */
 #boombox-ui.dark {
-    background: #181818;
-    color: #eee;
-    box-shadow: 0 10px 35px rgba(0,0,0,0.75);
+    background: rgba(10, 20, 50, 0.95);
+    color: #eaf4ff;
+    box-shadow: 0 12px 40px rgba(0, 50, 100, 0.8);
 }
 
 #boombox-ui.light {
-    background: #ffffff;
-    color: #111;
-    box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+    background: rgba(230, 240, 255, 0.95);
+    color: #0f2a45;
+    box-shadow: 0 12px 40px rgba(0, 90, 150, 0.25);
 }
 
 @keyframes fadeIn {
@@ -44,7 +48,7 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* HEADER */
+/* --------------------- HEADER --------------------- */
 header {
     display: flex;
     justify-content: space-between;
@@ -52,14 +56,17 @@ header {
     width: 100%;
 }
 
-.header-right {
-    display: flex;
-    gap: 10px;
-}
-
 header h1 {
     font-weight: 700;
     font-size: 24px;
+    background: linear-gradient(90deg, #7cc7ff, #1e90ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header-right {
+    display: flex;
+    gap: 10px;
 }
 
 header button {
@@ -67,20 +74,16 @@ header button {
     border: none;
     font-size: 20px;
     cursor: pointer;
+    color: inherit;
     transition: transform 0.2s ease, color 0.3s ease;
 }
 
 header button:hover {
     transform: scale(1.2);
+    color: #7cc7ff;
 }
 
-#boombox-ui.dark header button { color: #aaa; }
-#boombox-ui.dark header button:hover { color: white; }
-
-#boombox-ui.light header button { color: #666; }
-#boombox-ui.light header button:hover { color: #111; }
-
-/* INPUT */
+/* --------------------- INPUT --------------------- */
 .track-info {
     width: 100%;
     text-align: center;
@@ -88,47 +91,45 @@ header button:hover {
 
 #url {
     width: 100%;
-    padding: 12px 16px;
+    max-width: 100%;
+    padding: 10px 12px;
     border-radius: 14px;
     border: none;
     font-size: 14px;
     outline: none;
-    box-sizing: border-box;
     margin-bottom: 8px;
-    transition: background 0.3s ease, color 0.3s ease;
-}
-
-#boombox-ui.dark #url {
-    background: #2a2a2a;
-    color: white;
-}
-
-#boombox-ui.light #url {
-    background: #f0f0f0;
-    color: black;
+    box-sizing: border-box; /* ✅ évite de dépasser la boîte */
+    
+    background: rgba(255, 255, 255, 0.1);
+    color: #eaf4ff;
+    transition: all 0.3s ease;
 }
 
 #url::placeholder {
-    color: #aaa;
-    transition: color 0.3s ease;
+    color: rgba(200, 220, 255, 0.6);
+}
+
+#boombox-ui.light #url {
+    background: rgba(0, 50, 100, 0.05);
+    color: #0f2a45;
 }
 
 #boombox-ui.light #url::placeholder {
-    color: #777;
+    color: rgba(0, 50, 100, 0.5);
 }
 
-/* STATUS */
+/* --------------------- STATUS --------------------- */
 #trackStatus {
     font-size: 14px;
     font-weight: 500;
     user-select: none;
+    color: #88bfff;
     transition: color 0.3s ease;
 }
 
-#boombox-ui.dark #trackStatus { color: #bbb; }
-#boombox-ui.light #trackStatus { color: #444; }
+#boombox-ui.light #trackStatus { color: #0057b7; }
 
-/* CONTROLS */
+/* --------------------- CONTROLS --------------------- */
 .controls {
     display: flex;
     justify-content: center;
@@ -137,7 +138,7 @@ header button:hover {
 }
 
 .controls button {
-    background: #1db954;
+    background: linear-gradient(145deg, #66b3ff, #1e90ff);
     border: none;
     color: white;
     font-size: 22px;
@@ -145,16 +146,16 @@ header button:hover {
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 15px rgba(29,185,84,0.3);
+    box-shadow: 0 4px 15px rgba(30, 144, 255, 0.4);
 }
 
 .controls button:hover {
-    background: #1ed760;
+    background: linear-gradient(145deg, #7cc7ff, #2aa0ff);
     transform: scale(1.15);
 }
 
-/* VOLUME */
-.volume-control {
+/* --------------------- SLIDERS --------------------- */
+.volume-control, .distance-control {
     display: flex;
     align-items: center;
     gap: 14px;
@@ -162,109 +163,47 @@ header button:hover {
     margin-top: 10px;
 }
 
-.volume-control i {
+.volume-control i, .distance-control label {
     font-size: 16px;
-    transition: color 0.3s ease;
+    color: #88bfff;
 }
 
-#boombox-ui.dark .volume-control i { color: #ccc; }
-#boombox-ui.light .volume-control i { color: #666; }
-
-.volume-control input[type="range"] {
+input[type="range"] {
     flex-grow: 1;
     cursor: pointer;
     -webkit-appearance: none;
     height: 6px;
     border-radius: 6px;
+    background: rgba(120, 180, 255, 0.3);
     transition: background 0.3s ease;
 }
 
-#boombox-ui.dark .volume-control input[type="range"] { background: #333; }
-#boombox-ui.light .volume-control input[type="range"] { background: #ddd; }
-
-.volume-control input[type="range"]::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 18px;
     height: 18px;
-    background: #1db954;
+    background: #1e90ff;
     border-radius: 50%;
     cursor: pointer;
     margin-top: -6px;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, background 0.3s ease;
 }
 
-.volume-control input[type="range"]::-webkit-slider-thumb:hover {
+input[type="range"]::-webkit-slider-thumb:hover {
     transform: scale(1.2);
+    background: #7cc7ff;
 }
 
-/* DISTANCE */
-.distance-control {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    margin-top: 15px;
-}
-
-.distance-control label {
-    width: 70px;
-    font-size: 14px;
-    font-weight: 600;
-    user-select: none;
-}
-
-#distanceValue {
-    width: 40px;
-    font-size: 14px;
-    text-align: right;
-    user-select: none;
-}
-
-.distance-control input[type="range"] {
-    flex-grow: 1;
-    cursor: pointer;
-    -webkit-appearance: none;
-    height: 6px;
-    border-radius: 6px;
-    background: var(--slider-bg);
-    transition: background 0.3s ease;
-}
-
-#boombox-ui.dark .distance-control input[type="range"] {
-    --slider-bg: #333;
-}
-
-#boombox-ui.light .distance-control input[type="range"] {
-    --slider-bg: #ddd;
-}
-
-.distance-control input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 18px;
-    height: 18px;
-    background: #1db954;
-    border-radius: 50%;
-    cursor: pointer;
-    margin-top: -6px;
-    transition: transform 0.2s ease;
-}
-
-.distance-control input[type="range"]::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
-}
-
-
-#boombox-ui {
-    position: relative; /* important pour positionner la barre à l'intérieur */
-}
+/* --------------------- DRAG BAR --------------------- */
+#boombox-ui { position: relative; }
 
 #drag-bar {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 22px; /* hauteur réduite */
-    background: rgba(29, 185, 84, 0.9);
+    height: 22px;
+    background: linear-gradient(90deg, #1e90ff, #7cc7ff);
     cursor: grab;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
@@ -280,21 +219,24 @@ header button:hover {
 
 #drag-bar:active {
     cursor: grabbing;
-    background: rgba(29, 185, 84, 1);
+    background: linear-gradient(90deg, #2aa0ff, #a0d8ff);
 }
 
-/* Expanded UI */
 #boombox-ui.expanded {
     width: 500px;
-    height: auto;
     padding-bottom: 30px;
+      transform: scale(1.1);
 }
+
 
 #playlist-section {
     width: 100%;
     margin-top: 20px;
     padding: 15px;
     border-radius: 15px;
+    background: rgba(20, 30, 60, 0.9);
+    color: white;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     transition: all 0.3s ease;
 }
 
@@ -330,7 +272,7 @@ header button:hover {
 }
 
 .playlist-form button {
-    background: #1db954;
+    background: #1e90ff;
     border: none;
     color: white;
     padding: 8px 12px;
@@ -340,7 +282,7 @@ header button:hover {
 }
 
 .playlist-form button:hover {
-    background: #1ed760;
+    background: #1e90ff;
 }
 
 #playlistList {
@@ -368,7 +310,7 @@ header button:hover {
 }
 
 #expandBtn {
-    background: #1db954;
+    background: #1e90ff;
     color: white;
     border: none;
     padding: 8px 12px;
@@ -379,23 +321,25 @@ header button:hover {
 }
 
 #expandBtn:hover {
-    background: #1ed760;
+    background: #1e90ff;
 }
 
 .add-playlist {
     margin-top: 6px;
-    background: #1db954;
+    background: #1e90ff; /* ✅ Bleu uniforme */
     color: white;
     border: none;
     padding: 8px 12px;
     border-radius: 10px;
     cursor: pointer;
     font-size: 14px;
+    width: 100%;
+    box-sizing: border-box; /* ✅ Empêche de dépasser */
     transition: background 0.2s ease;
 }
 
 .add-playlist:hover {
-    background: #1ed760;
+    background: #2aa0ff; /* ✅ Légère variation au hover */
 }
 
 #playlistsContainer {
@@ -403,20 +347,20 @@ header button:hover {
     flex-direction: column;
     gap: 15px;
     margin-top: 10px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .playlist-block {
     border-radius: 12px;
     padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
     transition: background 0.3s ease;
 }
 
-#boombox-ui.dark .playlist-block {
-    background: #222;
-}
-#boombox-ui.light .playlist-block {
-    background: #f0f0f0;
-}
+#boombox-ui.dark .playlist-block { background: #222; }
+#boombox-ui.light .playlist-block { background: #f0f0f0; }
 
 .playlist-block h3 {
     font-size: 16px;
@@ -428,6 +372,8 @@ header button:hover {
     list-style: none;
     padding: 0;
     margin: 0;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .playlist-item {
@@ -453,16 +399,16 @@ header button:hover {
     transition: color 0.2s ease;
 }
 
-.removeTrack:hover {
-    color: #ff0000;
-}
+.removeTrack:hover { color: #ff0000; }
 
-
+/* ---------------- SECTION PLAYLIST ---------------- */
 #playlist-section {
     display: flex;
     height: 250px;
     transition: background 0.3s, color 0.3s;
     border-top: 1px solid rgba(0,0,0,0.2);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .dark #playlist-section {
@@ -476,6 +422,7 @@ header button:hover {
     border-top: 1px solid rgba(0,0,0,0.1);
 }
 
+/* ---------------- SIDEBAR ---------------- */
 .playlist-sidebar {
     width: 180px;
     padding: 10px;
@@ -483,18 +430,13 @@ header button:hover {
     flex-direction: column;
     gap: 10px;
     transition: background 0.3s;
-    border: 2px solid #1db954; 
-    border-radius: 6px; 
+    border: 2px solid #1e90ff; /* ✅ Bleu au lieu de vert */
+    border-radius: 6px;
+    box-sizing: border-box;
 }
 
-
-.dark .playlist-sidebar {
-    background: #181818;
-}
-
-.light .playlist-sidebar {
-    background: #ffffff;
-}
+.dark .playlist-sidebar { background: #181818; }
+.light .playlist-sidebar { background: #ffffff; }
 
 .playlist-sidebar h2 {
     font-size: 16px;
@@ -509,22 +451,10 @@ header button:hover {
     overflow-y: auto;
 }
 
-#playlistsMenu::-webkit-scrollbar {
-    width: 6px;
-}
-
-#playlistsMenu::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-#playlistsMenu::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 4px;
-}
-
-#playlistsMenu::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
+#playlistsMenu::-webkit-scrollbar { width: 6px; }
+#playlistsMenu::-webkit-scrollbar-track { background: transparent; }
+#playlistsMenu::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+#playlistsMenu::-webkit-scrollbar-thumb:hover { background: #555; }
 
 #playlistsMenu li {
     padding: 6px;
@@ -532,28 +462,24 @@ header button:hover {
     transition: background 0.2s;
 }
 
-.dark #playlistsMenu li:hover {
-    background: #282828;
-}
-
-.light #playlistsMenu li:hover {
-    background: #e0e0e0;
-}
+.dark #playlistsMenu li:hover { background: #282828; }
+.light #playlistsMenu li:hover { background: #e0e0e0; }
 
 #playlistsMenu li.active {
-    background: #1db954;
-    color: black;
+    background: #1e90ff; /* ✅ Bleu */
+    color: white;
     font-weight: bold;
 }
 
+/* ---------------- CONTENU PLAYLIST ---------------- */
 .playlist-content {
   position: relative;
   width: 100%;
   padding-top: 40px; 
   overflow-y: auto;  
   max-height: 210px; 
+  box-sizing: border-box;
 }
-
 
 .playlist-content h3#currentPlaylistTitle {
   font-size: 1.2rem;
@@ -570,7 +496,6 @@ header button:hover {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 15ch;
 }
 
 #playlistTracks li span {
@@ -593,6 +518,7 @@ header button:hover {
   border-color: rgba(0,0,0,0.1);
 }
 
+/* ---------------- FORMULAIRE ---------------- */
 .playlist-form {
   display: flex;
   align-items: center;
@@ -615,7 +541,6 @@ header button:hover {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: all 0.3s;
 }
 
 .light .playlist-form input#playlistName {
@@ -637,17 +562,15 @@ header button:hover {
   justify-content: center;
   background: transparent;
   border: none;
-  color: #1db954;
+  color: #1e90ff; /* ✅ Bleu */
   cursor: pointer;
   font-size: 1.2rem;
   transition: color 0.3s ease;
 }
 
-.playlist-form button#createPlaylistBtn:hover {
-  color: #17a647;
-}
+.playlist-form button#createPlaylistBtn:hover { color: #2aa0ff; }
 
-/* Overlay flou */
+/* ---------------- MODALE ---------------- */
 .confirm-modal {
   position: fixed;
   top: 0;
@@ -657,46 +580,27 @@ header button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(6px);
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.4); /* ✅ Pas de blur */
   z-index: 3000;
 }
 
-.confirm-modal.hidden {
-  display: none;
-}
+.confirm-modal.hidden { display: none; }
 
-/* Conteneur de la boîte */
 .confirm-box {
-  background: rgba(255, 255, 255, 0.15);
+  background: #222; /* ✅ Opacité fixe, plus de blur */
   border-radius: 12px;
   padding: 25px 35px;
   text-align: center;
   width: 320px;
-  backdrop-filter: blur(12px);
   box-shadow: 0 8px 32px rgba(0,0,0,0.25);
   transition: all 0.3s ease;
 }
 
-/* Mode sombre */
-.dark .confirm-box {
-  background: rgba(30, 30, 30, 0.8);
-  color: white;
-}
+.dark .confirm-box { background: #222; color: white; }
+.light .confirm-box { background: #fff; color: black; }
 
-/* Mode clair */
-.light .confirm-box {
-  background: rgba(255, 255, 255, 0.9);
-  color: black;
-}
+.confirm-text { font-size: 16px; margin-bottom: 20px; }
 
-/* Texte */
-.confirm-text {
-  font-size: 16px;
-  margin-bottom: 20px;
-}
-
-/* Boutons */
 .confirm-buttons {
   display: flex;
   justify-content: center;
@@ -712,21 +616,8 @@ header button:hover {
   transition: 0.2s;
 }
 
-.btn.confirm {
-  background: #e74c3c;
-  color: white;
-}
+.btn.confirm { background: #e74c3c; color: white; }
+.btn.cancel { background: #555; color: white; }
+.light .btn.cancel { background: #ddd; color: black; }
 
-.btn.cancel {
-  background: #555;
-  color: white;
-}
-
-.light .btn.cancel {
-  background: #ddd;
-  color: black;
-}
-
-.btn:hover {
-  transform: scale(1.05);
-}
+.btn:hover { transform: scale(1.05); }

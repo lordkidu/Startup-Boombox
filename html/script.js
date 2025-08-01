@@ -2,7 +2,8 @@ const ui = document.getElementById('boombox-ui');
 const themeToggle = document.getElementById('themeToggle');
 const trackStatus = document.getElementById('trackStatus');
 const playPauseBtn = document.getElementById('playPauseBtn');
-const stopBtn = document.getElementById('stopBtn');
+const prevTrackBtn = document.getElementById('prevTrackBtn');
+const nextTrackBtn = document.getElementById('nextTrackBtn');
 const urlInput = document.getElementById('url');
 const closeBtn = document.getElementById('closeBtn');
 const addToPlaylistBtn = document.getElementById('addToPlaylistBtn');
@@ -15,7 +16,6 @@ const playlistSection = document.getElementById('playlist-section');
 const deletePlaylistBtn = document.getElementById('deletePlaylistBtn');
 
 let currentTrackTitle = "";
-
 let isPlaying = false;
 let isPaused = false;
 
@@ -117,14 +117,26 @@ playPauseBtn.addEventListener('click', () => {
     }
 });
 
-stopBtn.addEventListener('click', () => {
-    isPlaying = false;
-    isPaused = false;
-    playlistPlaying = false;
-    currentTrackTitle = "";
-    fetch(`https://${GetParentResourceName()}/stopSound`, { method: 'POST' });
-    playPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
-    updateStatus();
+// Bouton précédent
+prevTrackBtn.addEventListener('click', () => {
+    if (!currentPlaylist || !playlists[currentPlaylist] || playlists[currentPlaylist].length === 0) return;
+
+    currentTrackIndex = (currentTrackIndex > 0)
+        ? currentTrackIndex - 1
+        : playlists[currentPlaylist].length - 1;
+
+    playFromPlaylist(currentPlaylist, currentTrackIndex);
+});
+
+// Bouton suivant
+nextTrackBtn.addEventListener('click', () => {
+    if (!currentPlaylist || !playlists[currentPlaylist] || playlists[currentPlaylist].length === 0) return;
+
+    currentTrackIndex = (currentTrackIndex < playlists[currentPlaylist].length - 1)
+        ? currentTrackIndex + 1
+        : 0;
+
+    playFromPlaylist(currentPlaylist, currentTrackIndex);
 });
 
 document.getElementById('volume').addEventListener('input', e => {
@@ -246,7 +258,7 @@ function playFromPlaylist(playlistName, index) {
     if (!track) return;
 
     currentTrackIndex = index;
-    playlistPlaying = false;
+    playlistPlaying = true;
     isPlaying = true;
     isPaused = false;
     currentTrackTitle = track.title;
@@ -270,7 +282,11 @@ async function playPlaylist() {
     async function playNext() {
         if (!playlistPlaying || currentTrackIndex >= playlists[currentPlaylist].length) {
             playlistPlaying = false;
-            stopBtn.click();
+            isPlaying = false;
+            isPaused = false;
+            currentTrackTitle = "";
+            playPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            updateStatus();
             return;
         }
 
@@ -288,6 +304,7 @@ async function playPlaylist() {
             body: JSON.stringify({ url: track.url })
         });
 
+        // Simule la lecture (3 minutes)
         setTimeout(() => {
             if (playlistPlaying) {
                 currentTrackIndex++;
@@ -443,8 +460,6 @@ expandBtn.addEventListener('click', () => {
     }
 });
 
-
-
 const deleteConfirmContainer = document.getElementById('deleteConfirmContainer');
 const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
 const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
@@ -456,37 +471,28 @@ deletePlaylistBtn.addEventListener('click', () => {
     deleteConfirmContainer.classList.remove('hidden');
 });
 
-
 cancelDeleteBtn.addEventListener('click', () => {
     deleteConfirmContainer.classList.add('hidden'); 
 });
 
-
 confirmDeleteBtn.addEventListener('click', () => {
     if (!currentPlaylist) return;
 
-  
     delete playlists[currentPlaylist];
 
-  
     const playlistNames = Object.keys(playlists);
     if (playlistNames.length > 0) {
-    currentPlaylist = playlistNames[0];
-    currentPlaylistTitle.textContent = currentPlaylist;
-    deletePlaylistBtn.disabled = false;
-} else {
-    currentPlaylist = null;
-    currentPlaylistTitle.textContent = "No playlist selected";
-    deletePlaylistBtn.disabled = true;
-
- 
-    playlistSection.classList.remove('hidden');
-}
-
+        currentPlaylist = playlistNames[0];
+        currentPlaylistTitle.textContent = currentPlaylist;
+        deletePlaylistBtn.disabled = false;
+    } else {
+        currentPlaylist = null;
+        currentPlaylistTitle.textContent = "No playlist selected";
+        deletePlaylistBtn.disabled = true;
+        playlistSection.classList.remove('hidden');
+    }
 
     renderPlaylists();
     savePlaylists();
-
- 
     deleteConfirmContainer.classList.add('hidden');
 });
