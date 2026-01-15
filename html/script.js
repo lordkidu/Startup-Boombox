@@ -19,6 +19,9 @@ let currentTrackTitle = "";
 let isPlaying = false;
 let isPaused = false;
 
+let audioPlayer = new Audio();
+audioPlayer.crossOrigin = "anonymous"; // si nécessaire pour les sources externes
+
 let currentTrackIndex = 0; 
 let playlistPlaying = false; 
 
@@ -87,6 +90,10 @@ function playSimpleLink() {
         body: JSON.stringify({ url })
     });
 
+    audioPlayer.src = url;
+    audioPlayer.volume = parseFloat(document.getElementById('volume').value) || 0.5;
+    audioPlayer.play().catch(err => console.error("Erreur audio simple link :", err));
+
     playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
     updateStatus();
 }
@@ -94,22 +101,22 @@ function playSimpleLink() {
 playPauseBtn.addEventListener('click', () => {
     if (!isPlaying) {
         if (!playlistSection.classList.contains('hidden')) {
-            // Playlist visible -> joue la playlist complète
             if (currentPlaylist && playlists[currentPlaylist] && playlists[currentPlaylist].length > 0) {
                 playPlaylist();
             } else {
                 playSimpleLink();
             }
         } else {
-            // Playlist cachée -> joue lien simple uniquement
             playSimpleLink();
         }
     } else if (isPlaying && !isPaused) {
+        audioPlayer.pause();
         isPaused = true;
         fetch(`https://${GetParentResourceName()}/pauseSound`, { method: 'POST' });
         playPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
         updateStatus();
     } else if (isPlaying && isPaused) {
+        audioPlayer.play();
         isPaused = false;
         fetch(`https://${GetParentResourceName()}/resumeSound`, { method: 'POST' });
         playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
@@ -140,10 +147,13 @@ nextTrackBtn.addEventListener('click', () => {
 });
 
 document.getElementById('volume').addEventListener('input', e => {
+    const vol = parseFloat(e.target.value);
+    audioPlayer.volume = vol;
+
     fetch(`https://${GetParentResourceName()}/setVolume`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ volume: parseFloat(e.target.value) })
+        body: JSON.stringify({ volume: vol })
     });
 });
 
@@ -269,6 +279,10 @@ function playFromPlaylist(playlistName, index) {
         body: JSON.stringify({ url: track.url })
     });
 
+    audioPlayer.src = track.url;
+    audioPlayer.volume = parseFloat(document.getElementById('volume').value) || 0.5;
+    audioPlayer.play().catch(err => console.error("Erreur audio playlist :", err));
+
     playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
     updateStatus();
 }
@@ -279,7 +293,7 @@ async function playPlaylist() {
     playlistPlaying = true;
     currentTrackIndex = 0;
 
-    async function playNext() {
+    function playNext() {
         if (!playlistPlaying || currentTrackIndex >= playlists[currentPlaylist].length) {
             playlistPlaying = false;
             isPlaying = false;
@@ -298,19 +312,17 @@ async function playPlaylist() {
         playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
         updateStatus();
 
-        await fetch(`https://${GetParentResourceName()}/playSound`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url: track.url })
+        audioPlayer.src = track.url;
+        audioPlayer.volume = parseFloat(document.getElementById('volume').value) || 0.5;
+
+        audioPlayer.play().catch(err => {
+            console.error("Erreur lecture audio :", err);
         });
 
-        // Simule la lecture (3 minutes)
-        setTimeout(() => {
-            if (playlistPlaying) {
-                currentTrackIndex++;
-                playNext();
-            }
-        }, 180000); 
+        audioPlayer.onended = () => {
+            currentTrackIndex++;
+            playNext();
+        };
     }
 
     playNext();
@@ -358,7 +370,6 @@ function renderPlaylists() {
     });
 }
 
-
 async function fetchVideoTitle(url) {
     if (url.includes('youtube.com') || url.includes('youtu.be')) {
         try {
@@ -378,7 +389,6 @@ playlistDropdown.classList.add('hidden');
 playlistDropdown.style.position = 'absolute';
 playlistDropdown.style.top = '110%';
 playlistDropdown.style.left = '0';
-playlistDropdown.style.background = '#181818';
 playlistDropdown.style.borderRadius = '8px';
 playlistDropdown.style.listStyle = 'none';
 playlistDropdown.style.padding = '5px 0';
@@ -427,8 +437,6 @@ function renderPlaylistDropdown() {
             savePlaylists();
             deletePlaylistBtn.disabled = false;
         });
-        li.addEventListener('mouseenter', () => li.style.backgroundColor = '#1db954');
-        li.addEventListener('mouseleave', () => li.style.backgroundColor = 'transparent');
         playlistDropdown.appendChild(li);
     }
 }
@@ -464,10 +472,8 @@ const deleteConfirmContainer = document.getElementById('deleteConfirmContainer')
 const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
 const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
 
-// Quand on clique sur la corbeille
 deletePlaylistBtn.addEventListener('click', () => {
     if (!currentPlaylist) return;
-    // Affiche le modal avec la classe
     deleteConfirmContainer.classList.remove('hidden');
 });
 
@@ -496,3 +502,20 @@ confirmDeleteBtn.addEventListener('click', () => {
     savePlaylists();
     deleteConfirmContainer.classList.add('hidden');
 });
+
+
+audioPlayer.onended = () => {
+    if (playlistPlaying) {
+        currentTrackIndex++;
+        if (currentTrackIndex < playlists[currentPlaylist].length) {
+            playFromPlaylist(currentPlaylist, currentTrackIndex);
+        } else {
+            playlistPlaying = false;
+            isPlaying = false;
+            isPaused = false;
+            currentTrackTitle = "";
+            playPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            updateStatus();
+        }
+    }
+};

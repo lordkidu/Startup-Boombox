@@ -11,7 +11,7 @@ Config.TextHelpDropBoombox = "Press ~INPUT_CONTEXT~ to drop the boombox on the g
 
 
 Config.Sound = {
-    DefaultDistance = 20.0,   -- Distance audible par défaut
-    MaxDistance = 50.0        -- Distance max possible configurable
+    DefaultDistance = 20.0,   
+    MaxDistance = 50.0        
 }
 
