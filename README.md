@@ -58,11 +58,10 @@ Automatic boombox restore on reconnect
 
 # Media
 
-<img width="653" height="855" alt="image" src="https://github.com/user-attachments/assets/8bd64515-1b6c-4b10-ac66-87da8a155934" />
-<img width="509" height="513" alt="image" src="https://github.com/user-attachments/assets/a6e6ba5e-42a8-4c6a-a046-63979aa9cbcf" />
-<img width="575" height="838" alt="image" src="https://github.com/user-attachments/assets/ab874efb-5c14-4c37-9d1d-2be24070773d" />
-<img width="484" height="505" alt="image" src="https://github.com/user-attachments/assets/e97d3901-8b55-49b6-9070-96b08652c7de" />
-<img width="589" height="845" alt="image" src="https://github.com/user-attachments/assets/05976bc1-9003-4b6a-a0cd-6374627b48b2" />
+<img width="976" height="588" alt="image" src="https://github.com/user-attachments/assets/0d3a181e-84c7-4ffe-8a2b-747a5d5d786a" />
+<img width="958" height="905" alt="image" src="https://github.com/user-attachments/assets/33a912f5-e95c-4953-beaa-331962262555" />
+<img width="941" height="914" alt="image" src="https://github.com/user-attachments/assets/75ccbdf3-8560-4831-9418-affb9356bba0" />
+
 
 
 
