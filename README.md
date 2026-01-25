@@ -21,8 +21,7 @@ No third-party music or streaming services are included or affiliated.
 ---
 # Media
 
-![image|467x500, 75%](upload://cn5IYJYa11uXvkkFhXYcmSKZPV3.jpeg)
-![image (18)|514x499, 75%](upload://slq0WEUoKGc35VIF4nDKV64CROI.jpeg))
+<img width="941" height="914" alt="image (18)" src="https://github.com/user-attachments/assets/79cb00ec-105f-4909-903d-42a2f9ba2156" />
 
 
 
