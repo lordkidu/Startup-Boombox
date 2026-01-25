@@ -1,61 +1,24 @@
 # 🎵 Startup Boombox
-Bring life to your server with a fully interactive Boombox system!
-Players can play music anywhere, carry their boombox, or drop it on the ground for everyone nearby to hear.
+This script adds a portable boombox system with 3D positional audio.
 
-# ✨ Features
-🔊 Play 3D positional audio with adjustable distance and volume (via xsound)
+Players can carry, drop, and interact with the boombox to play audio using a clean and customizable audio control interface.
 
-🎶 Drop the boombox on the ground and let everyone nearby hear the music
+### **Key Features**
+- 3D positional audio with adjustable distance and volume
+- Portable boombox: carry, drop, and pick up
+- Custom audio control UI (light & dark mode)
+- ox_target integration
+- ESX & QBCore support
+- ox_inventory compatibility
+- Audio source management (user-provided URLs only)
+- Fully configurable settings
 
-🎧 Carry the boombox in your hands while walking around
+### **Important Notice**
+This resource does not include any audio files.
+Users must provide their own audio sources and are fully responsible for ensuring they have the legal rights to use them.
+No third-party music or streaming services are included or affiliated.
 
-📦 Pickup the boombox into your inventory or back into your hands
-
-🎛️ Simple and clean NUI interface to:
-
-Play / Pause / Stop the music
-
-Adjust volume
-
-Adjust sound distance
-
-🎯 ox_target integration for all interactions
-
-💾 ESX inventory support with usable items
-
-🔄 Automatic item restoration if the player reconnects without the boombox
-
-🌐 3D sound only plays for players within a configurable distance
-
-# 📦 Dependencies
-ESX Framework
-
-ox_target
-
-xsound
-
-# 🕹️ Usage
-Use the boombox item to spawn and hold the boombox.
-
-Press E to drop it on the ground.
-
-Interact with the boombox using ox_target to:
-
-Open the music UI
-
-Pick it up into your inventory
-
-Hold it in your hands again
-
-# ⚙️ Configuration
-Sound max distance and volume
-
-Target interaction distance
-
-Notification messages
-
-Automatic boombox restore on reconnect
-
+---
 # Media
 
 <img width="976" height="588" alt="image" src="https://github.com/user-attachments/assets/0d3a181e-84c7-4ffe-8a2b-747a5d5d786a" />
