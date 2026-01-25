@@ -20,7 +20,7 @@ let isPlaying = false;
 let isPaused = false;
 
 let audioPlayer = new Audio();
-audioPlayer.crossOrigin = "anonymous"; // si nécessaire pour les sources externes
+audioPlayer.crossOrigin = "anonymous"; 
 
 let currentTrackIndex = 0; 
 let playlistPlaying = false; 
@@ -370,18 +370,10 @@ function renderPlaylists() {
     });
 }
 
-async function fetchVideoTitle(url) {
-    if (url.includes('youtube.com') || url.includes('youtu.be')) {
-        try {
-            const res = await fetch(`https://www.youtube.com/oembed?url=${url}&format=json`);
-            const data = await res.json();
-            return data.title;
-        } catch (e) {
-            return url;
-        }
-    }
+function fetchVideoTitle(url) {
     return url.split('/').pop();
 }
+
 
 const playlistDropdown = document.createElement('ul');
 playlistDropdown.id = 'playlistDropdown';
